@@ -1,0 +1,46 @@
+.wp-coursesdatabase-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.wp-coursesdatabase-link-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+    margin: 10px;
+    padding: 10px;
+    flex-basis: 30%;
+    height: 100%;
+}
+
+.wp-coursesdatabase-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -10px;
+  margin-bottom: 20px;
+}
+
+
+.wp-coursesdatabase-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 100%;
+}
+
+.wp-coursesdatabase-box:hover {
+    background-color: #ddd;
+}
+#map {
+    width: 100%;
+    height: 500px;
+}
+
+
