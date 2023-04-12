@@ -6,10 +6,22 @@ function wp_coursesdatabase_search($atts) {
         'link_column' => 'link_address'
     ), $atts, 'wp_coursesdatabase_search' );
 
+    // Get all the course names from the database
+    $sql = "SELECT DISTINCT $atts[column_name] FROM $atts[table_name]";
+    $course_names = $wpdb->get_col($sql);
+
+    // Create the datalist options
+    $options = '';
+    foreach ($course_names as $course_name) {
+        $options .= '<option value="' . esc_attr($course_name) . '">';
+    }
+
     $output = '<form action="" method="get">
                 <input type="hidden" name="search_type" value="wp_coursesdatabase" />
-                <input type="text" name="wp_coursesdatabase_search" placeholder="Search..." />
+                <input type="text" name="wp_coursesdatabase_search" placeholder="Please enter course name" list="course_names" />
+                <datalist id="course_names">' . $options . '</datalist>
                 <input type="submit" value="Search" />
+                <button id="reset-btn" type="button" onclick="resetPage()">Reset</button>
               </form>';
 
     $sql = "SELECT * FROM $atts[table_name]";
@@ -36,6 +48,13 @@ function wp_coursesdatabase_search($atts) {
     } else {
         $output .= '<p>No results found.</p>';
     }
+
+    // Add JavaScript function to reset the page
+    $output .= '<script>
+                    function resetPage() {
+                        window.location.href = "https://financialguidevic.link/find-a-tafe-course";
+                    }
+                </script>';
 
     return $output;
 }

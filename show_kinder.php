@@ -4,8 +4,43 @@ function show_kinder_on_map( $atts ) {
 
     ob_start();
     ?>
-    <div id="map"></div>
-    <input id="search-input" class="controls" type="text" placeholder="Enter an address">
+<style>
+	    ul {
+	      list-style: none;
+	      padding: 0;
+	      margin: 0;
+	    }
+	 .kinder-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+        }
+	</style>
+	<div style="display:flex;">
+        <div style="flex-basis:60%;">
+            <input id="search-input" class="controls" type="text" placeholder="Please enter your address">
+            <div id="map"></div>
+        </div>
+        <div style="flex-basis:40%;">
+            <h3>Kinder Locations</h3>
+            <ul id="kinder-list">
+                <?php foreach ( $kinder_locations as $i => $location ) : ?>
+                    <div class="kinder-box">
+                        <li class="kinder-location" data-lat="<?php echo $location->latitude; ?>" data-lng="<?php echo $location->longitude; ?>">
+                            <h4><?php echo addslashes($location->name); ?></h4>
+                            <p style="font-size:16px;"><b>Address:</b> <?php echo addslashes($location->address); ?></p>
+                            <p style="font-size:16px;"><b>Phone:</b> <?php echo addslashes($location->phone); ?></p>
+                            <p style="font-size:16px;"><b>Email:</b> <?php echo addslashes($location->email); ?></p>
+                        </li>
+                    </div>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    
     <script>
     function initMap() {
         var melbourne = { lat: -37.8136, lng: 144.9631 };
@@ -22,10 +57,7 @@ function show_kinder_on_map( $atts ) {
               '<div id="bodyContent">'+
               '<p style="font-size:16px;"><b>Address:</b> <?php echo addslashes($location->address); ?></p>'+
               '<p style="font-size:16px;"><b>Phone:</b> <?php echo addslashes($location->phone); ?></p>'+
-              '<p style="font-size:16px;"><b>Email:</b> <?php echo addslashes($location->email); ?></p>'+
-              '<p style="font-size:16px;"><b>Program Type:</b> <?php echo addslashes($location->program_type); ?></p>'+
-              '<p style="font-size:16px;"><b>Council:</b> <?php echo addslashes($location->council); ?></p>'+
-              '<p style="font-size:16px;"><b>License ID:</b> <?php echo addslashes($location->licese_id); ?></p>'+
+             '<p style="font-size:16px;"><b>Email:</b> <a href="mailto:<?php echo addslashes($location->email); ?>" onclick="event.stopPropagation();"><?php echo addslashes($location->email); ?></a></p>'+
               '</div>'+
               '</div>';
 
@@ -52,6 +84,9 @@ function show_kinder_on_map( $atts ) {
         
         var searchInput = document.getElementById('search-input');
         var autocomplete = new google.maps.places.Autocomplete(searchInput);
+		 autocomplete.setComponentRestrictions({
+    country: "au"
+  });
 
         autocomplete.addListener('place_changed', function() {
             var place = autocomplete.getPlace();
@@ -63,8 +98,47 @@ function show_kinder_on_map( $atts ) {
 
             // Center the map on the selected address
             map.setCenter(place.geometry.location);
-            map.setZoom(17);
+            map.setZoom(16);
+			
+			// Highlight the corresponding location in the list
+    var selectedLocation = document.querySelector(
+      ".kinder-location[data-lat='" + lat + "'][data-lng='" + lng + "']"
+    );
+    if (selectedLocation) {
+      // Remove the active class from all other locations
+      var locations = document.querySelectorAll(".kinder-location");
+      locations.forEach(function(location) {
+        location.classList.remove("active");
+      });
+
+      // Add the active class to the selected location
+      selectedLocation.classList.add("active");
+    }
+
         }); 
+		
+		 // Click handler for list items
+  var locationItems = document.querySelectorAll(".kinder-location");
+  locationItems.forEach(function(item) {
+    item.addEventListener("click", function() {
+      var lat = parseFloat(this.dataset.lat);
+      var lng = parseFloat(this.dataset.lng);
+
+      map.setCenter({ lat: lat, lng: lng });
+      map.setZoom(16);
+
+      // Remove the active class from all other locations
+      var locations = document.querySelectorAll(".kinder-location");
+      locations.forEach(function(location) {
+        location.classList.remove("active");
+      });
+
+      // Add the active class to the selected location
+      this.classList.add("active");
+    });
+  });
+		
+	
     }
     </script>
 
