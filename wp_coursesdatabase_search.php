@@ -18,7 +18,7 @@ function wp_coursesdatabase_search($atts) {
 
     $output = '<form action="" method="get">
                 <input type="hidden" name="search_type" value="wp_coursesdatabase" />
-                <input type="text" name="wp_coursesdatabase_search" placeholder="Please enter course name" list="course_names" />
+                <input type="text" name="wp_coursesdatabase_search" placeholder="Please enter course name" list="course_names" class="tafe-text" />
                 <datalist id="course_names">' . $options . '</datalist>
                 <input type="submit" value="Search" />
                 <button id="reset-btn" type="button" onclick="resetPage()">Reset</button>

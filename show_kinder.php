@@ -37,9 +37,9 @@ function show_kinder_on_map( $atts ) {
 			<div id="trip-info" style="margin-bottom:15px; background-color: #E9F4F6; padding:15px; border-radius: 5px; box-shadow: 0px 1px 2px rgba(0,0,0,0.1); ">
             	<h3>Get directions</h3>
     			<p><b>Starting point:</b></p>
-				<input id="search-input" class="controls" type="text" placeholder="Please enter your address">
+				<input id="search-input" class="controls kinder-map-text" type="text" placeholder="Please enter your address">
     			<p><b>Destination:</b></p>
-				<input id="selected-kinder" class="controls" type="text" placeholder="Please select a Kinder on map or from the list" readonly style="background-color: #eee;">
+				<input id="selected-kinder" class="control kinder-map-text" type="text" placeholder="Please select a Kinder on map or from the list" readonly style="background-color: #eee;">
     			<button id="search-route-btn">Search Route</button>
 			</div>
 			<div class="kinder-container" style="background-color: #E9F4F6; padding:15px; border-radius: 5px; box-shadow: 0px 1px 2px rgba(0,0,0,0.1); ">
@@ -103,7 +103,10 @@ function show_kinder_on_map( $atts ) {
             var marker = new google.maps.Marker({
                 position: {lat: <?php echo $location->latitude; ?>, lng: <?php echo $location->longitude; ?>},
                 map: map,
-                title: '<?php echo addslashes($location->name); ?>'
+                title: '<?php echo addslashes($location->name); ?>',
+				icon: {
+            		url: "https://img.icons8.com/ios-filled/50/null/marker-k.png"
+        		}
             });
 		
 		    markers.push(marker);
