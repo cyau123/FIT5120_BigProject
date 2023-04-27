@@ -16,17 +16,18 @@ function wp_activities_search($atts) {
         $options .= '<option value="' . esc_attr($activity_name) . '">';
     }
 
-    $output = '<div class="container form-container">
+    $output = '<div class="outside-container"><div class="container form-container">
 	
-	<h2>Explore Activities to Strengthen Relationships</h2><h2>Activities for Family and Friends</h2>
 	<form action="" method="get" class="wp-activities-search-form">
   <div class="form-row">
     <div class="form-group col-md-4 ">
+		<label for="wp_activities" style="font-weight:bold">Name:</label>
 		<input type="hidden" name="search_type" value="wp_activities" />
       	<input type="text" name="wp_activities_search" placeholder="Please enter activity name" list="activity_names" class="form-control search-bar"/>
       	<datalist id="activity_names">' . $options . '</datalist>
     </div>
     <div class="form-group col-md-4">
+		<label for="wp_activities_location" style="font-weight:bold">Location:</label>
       	<select name="wp_activities_location" class="form-control custom-select ">
         <option value="">All Locations</option>';
           $locations = $wpdb->get_col("SELECT DISTINCT location FROM $atts[table_name] ORDER BY location ASC");
@@ -40,6 +41,7 @@ function wp_activities_search($atts) {
         	$output .= '</select>
     </div>
     <div class="form-group col-md-4 ">
+	<label for="wp_activities_category" style="font-weight:bold">Category:</label>
       <select name="wp_activities_category" class="form-control custom-select">
         <option value="">All Categories</option>';
           $categories = $wpdb->get_col("SELECT DISTINCT category FROM $atts[table_name] ORDER BY category ASC");
@@ -110,7 +112,7 @@ if (count($results) > 0) {
 		$output .= '<button type="button" class="btn btn-primary next-btn">Next</button>';
 		$output .= '</div>';
 
-		$output .= '</div>'; // Close the container div
+		$output .= '</div></div>'; // Close the container div
 	} else {
 		$output .= '<p>No results found.</p>';
 	}

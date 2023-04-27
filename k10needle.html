@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Getting Started with Chart JS with www.chartjs3.com</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(54, 162, 235, 1);
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(54, 162, 235, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+    width: 350px; /* Change width to resize the chart container */
+    height: 350px; /* Change height to resize the chart container */
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 3px rgba(54, 162, 235, 1);
+    background: white;
+  }
+   canvas {
+    width: 100%;
+    height: 100%;
+  }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script>
+   var myChart=null;
+
+function initializeChart() {
+   if (myChart) {
+    myChart.destroy(); // Destroy the existing chart if there is one
+  }
+    const storedScore = parseInt(localStorage.getItem('score'), 10);
+    console.log('The stored score is:', storedScore);
+    
+    // setup 
+    const data = {
+      labels: ['Low', 'High', 'Very High'],
+      datasets: [{
+        label: '',
+        data: [15, 5, 21],
+        backgroundColor: [
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(255, 26, 104, 1)'
+        ],
+        needleValue: storedScore-10,
+        borderColor: 'white',
+        borderWidth: 2,
+        cutout: '95%',
+        circumference :180,
+        rotation: 270,
+        borderRadius:5
+      }]
+    };
+    
+    //gaugeNeedle block
+    const gaugeNeedle ={
+        id: 'gaugeNeedle',
+        afterDatasetDraw(chart, args, options){
+            const {ctx, config, data, chartArea:{top, bottom, left, right, width, height}} = chart;
+            ctx.save();
+            const needleValue = data.datasets[0].needleValue;
+            const dataTotal = data.datasets[0].data.reduce((a,b) => a+b, 0);
+            const angle = Math.PI + (1/ dataTotal * needleValue * Math.PI);
+            const cx = width/2;
+            const cy = chart._metasets[0].data[0].y;
+            const chartBoxHeight = document.querySelector('.chartBox').offsetHeight;
+            const needleHeight = 100;
+            
+            //needle
+            ctx.translate(cx, cy);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, -2);
+            ctx.lineTo(needleHeight, 0);
+            ctx.lineTo(0, 2);
+            ctx.fillStyle ='#444';
+            ctx.fill();
+            ctx.restore();
+            
+            //needle dot
+           
+            ctx.beginPath();
+            ctx.arc(cx, cy, 5, 0, 10);
+            ctx.fill();
+            ctx.restore();
+            
+            ctx.font = '50px Helvetica';
+            ctx.fillStyle = '#444';
+            //label change value here
+            ctx.fillText(storedScore, cx, cy +50);
+            ctx.textAlign = 'center';
+            ctx.restore();
+        }
+    }
+    // config 
+    const config = {
+      type: 'doughnut',
+      data,
+      options: {
+          plugins:{
+              legend:{
+                  display: false
+              },
+              tooltip: {
+                  yAlign: 'bottom',
+                  displayColors: false,
+                  callbacks:{
+                      label: function(tooltipItem, data, value){
+                          return 'Level of distress';
+                      }
+                  }
+                }
+          }
+      },
+      plugins: [gaugeNeedle]
+    };
+
+    // render init block
+    myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+    }
+
+    </script>
+
+  </body>
+</html>

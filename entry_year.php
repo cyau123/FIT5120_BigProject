@@ -14,6 +14,17 @@ function entry_year_shortcode() {
 	}
 </style>
 
+<style>
+  .box {
+    background-color: #E9F4F6;
+    padding: 10px;
+  }
+  .box h2 {
+    font-size: 20px;
+    margin-top: 0;
+  }
+</style>
+
 
     <form id="entry-year-form" method="post">
         <p>
@@ -33,21 +44,31 @@ function entry_year_shortcode() {
             $age = date('Y') - $dob_year;
 			
 			if ($age >= 6){
-				echo "</br><p>Your child has exceeded the age requirement for kindergarten enrollment</p>";
+				echo "<div class = 'box'> 
+					<p>Your child has exceeded the age requirement for kindergarten enrollment</p>
+					</div>";
 			}
 			else if ($dob_month >= 1 && $dob_month <= 4){
 				$entry_year_three = $dob_year + 3 ;
 				$entry_three_plus = $entry_year_three+1;
 				$entry_year_four = $dob_year + 4 ;
 				$entry_four_plus = $entry_year_four+1;
-				echo "</br><p><b>Your child can start Three-Year-Old Kinder in:</b> $entry_year_three or $entry_three_plus</p>";
-				echo "<p><b>Your child can start Four-Year-Old Kinder in:</b> $entry_year_four or $entry_four_plus</p>";
+				
+				echo "<div class = 'box'>
+				<p><b>Your child can start Three-Year-Old Kinder in:</b></br>
+				$entry_year_three or $entry_three_plus</p>
+				<p><b>Your child can start Four-Year-Old Kinder in:</b></br> 
+				$entry_year_four or $entry_four_plus</p>
+				</div>";
 			}
 			else{
 				$entry_year_three = $dob_year + 4;
 				$entry_year_four = $dob_year + 5 ;
-				echo "</br><p><b>Your child can start Three-Year-Old Kinder in:</b> $entry_year_three</p>";
-				echo "<p><b>Your child can start Four-Year-Old Kinder in:</b> $entry_year_four</p>";
+				
+				echo "<div class = 'box'>
+				</br><p><b>Your child can start Three-Year-Old Kinder in:</b> $entry_year_three</p>
+				<p><b>Your child can start Four-Year-Old Kinder in:</b> $entry_year_four</p>
+				</div>";
 			}
         }
         ?>

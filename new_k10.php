@@ -248,6 +248,12 @@ function new_k10_shortcode() {
 			transform: translateY(0%);
 		  }
 		}
+		.meter-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+		}
 	</style>';
 	
 	$output .= '<div class="k10-header fade-in">';
@@ -292,7 +298,7 @@ function new_k10_shortcode() {
             <button type="button" id="prev-button" class="hidden" onclick="prevPage()">Previous</button>
         </div>
         <div class="button-right-wrapper">
-            <button type="button" id="next-button" onclick="nextPage()">Next</button>
+            <button type="button" id="next-button" class="hidden" onclick="nextPage()">Next</button>
             <button type="button" id="submit-button" class="hidden" onclick="submitK10()">Submit</button>
         </div>
     </div>
@@ -300,6 +306,16 @@ function new_k10_shortcode() {
 	$output .= '	<div class="k10-result-container">
   						<div id="k10-result"></div>
     				</div>
+					<div class="meter-container">
+						<div id="k10-meter" class="hidden">
+						
+							  <div class="chartBox">
+								<canvas id="myChart"></canvas>
+							  </div>
+						
+						</div>
+					</div>
+
     				<div class="retake-button-container">
   						<button type="button" id="retake-button" class="hidden fade-in" onclick="retakeTest()">Retake the test</button>
     				</div>';
@@ -373,7 +389,6 @@ function new_k10_shortcode() {
     	}
     }
 
-
 	function prevPage() {
 		if (currentPage > 0) {
 			showPage(currentPage - 1);
@@ -387,36 +402,31 @@ function new_k10_shortcode() {
 	}
 		
 	function retakeTest() {
-		// Reset the test
 		document.querySelectorAll("input[type=range]").forEach(function (input) {
 			input.value = "3";
 		});
-
-		// Hide the K10 score
 		document.getElementById("k10-result").innerHTML = "";
 
 		updateProgressBar();
-		// Show the first page
 		showPage(0);
 
-		// Show the previous button if it was hidden
 		if (document.getElementById("prev-button").classList.contains("hidden")) {
 			document.getElementById("prev-button").classList.remove("hidden");
 		}
-		
-		// Hide the previous button if it was shown
+
 		if (currentPage === 0 && !document.getElementById("prev-button").classList.contains("hidden")) {
 			document.getElementById("prev-button").classList.add("hidden");
 		}
 
-		// Show the next button if it was hidden
 		if (document.getElementById("next-button").classList.contains("hidden")) {
 			document.getElementById("next-button").classList.remove("hidden");
 		}
 		
+		document.getElementById("k10-meter").classList.add("hidden");
+		
 		document.getElementById("retake-button").classList.add("hidden");
 	}
-
+	
 	function submitK10() {
     var score = 0;
 	var level = "";
@@ -446,8 +456,12 @@ function new_k10_shortcode() {
 	else{
 		level = "Very High";
 	}
+	
+	localStorage.setItem("score", score);
+	initializeChart();
 	var k10Result = document.getElementById("k10-result");
     k10Result.innerHTML = "<h2>Thank you for taking the test</h2></br>Your score is: " + score + "</br>Your level of psychological distress is: " + level;
+	document.getElementById("k10-meter").classList.remove("hidden");
 	k10Result.classList.add("fade-in");
 	var progressBar = document.querySelector(".progress-bar");
     var progressText = document.querySelector(".progress-percentage");
@@ -458,7 +472,7 @@ function new_k10_shortcode() {
 	window.onload = function() {
         showPage(-1);
     };
-	</script>
+	</script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 	';
 
     return $output;

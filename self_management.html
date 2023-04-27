@@ -1,0 +1,41 @@
+<div id="result-physical-activity"></div>
+<div id="result-strength"></div>
+<div id="result-vegetables"></div>
+<div id="result-fruit"></div>
+<div id="result-grain"></div>
+<div id="result-lean-meat"></div>
+<div id="result-milk"></div>
+
+
+<script type="text/javascript">
+    function displayResults() {
+        const storedResults = localStorage.getItem("familyCompositionResults");
+
+        if (storedResults) {
+            const results = JSON.parse(storedResults);
+    
+            // Update the content of each widget
+            document.getElementById("result-physical-activity").innerText = results["Physical Activity"];
+            document.getElementById("result-strength").innerText = results["Strength"];
+            document.getElementById("result-vegetables").innerText = results["Vegetables & legumes/beans"];
+            document.getElementById("result-fruit").innerText = results["Fruit"];
+            document.getElementById("result-grain").innerText = results["Grain (cereal) foods, mostly wholegrain"];
+            document.getElementById("result-lean-meat").innerText = results["Lean meat and poultry, fish, eggs, nuts and seeds, and legumes/beans"];
+            document.getElementById("result-milk").innerText = results["Milk, yoghurt, cheese and/or alternatives (mostly reduced fat)"];
+    
+        } else {
+            // Update the widgets to display "No results available."
+            document.getElementById("result-physical-activity").innerText = "No results available.";
+            document.getElementById("result-strength").innerText = "No results available.";
+            document.getElementById("result-vegetables").innerText = "No results available.";
+            document.getElementById("result-fruit").innerText = "No results available.";
+            document.getElementById("result-grain").innerText = "No results available.";
+            document.getElementById("result-lean-meat").innerText = "No results available.";
+            document.getElementById("result-milk").innerText = "No results available.";
+        }
+    }
+
+    // Call the displayResults function when the page is loaded
+    document.addEventListener("DOMContentLoaded", displayResults);
+</script>
+
