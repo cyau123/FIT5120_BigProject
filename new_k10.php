@@ -28,17 +28,20 @@ function new_k10_shortcode() {
 		#k10 {
 			  position: relative;
 			  max-width: 100%;
-			  min-height: 1400px;
+			  min-height: 820px;
 			  padding: 60px;
 			  background-color: #E9F4F6;
 			  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
 			  border-radius: 5px;
 			}
 		.k10-header{
+			padding: 20px 20px 0px 20px;
 			margin-bottom: 50px;
 		}
 		#intro-page {
 		  text-align: center;
+		  padding: 0px 20px 0px 20px;
+		  margin-bottom: 0px;
 		}
 		.question {
 			margin-bottom: 35px;
@@ -86,9 +89,10 @@ function new_k10_shortcode() {
 			width: 85%; 
 			margin: 0 auto;
 			margin: 0 auto;
+			margin-top: 20px;
 			margin-left: 7.5%;
 			margin-right: 7.5%;
-			height: 8px;
+			height: 16px;
 			border-radius: 5px;
 			background: #E3E5E9;
 			outline: none;
@@ -97,8 +101,8 @@ function new_k10_shortcode() {
 		input[type=range]::-webkit-slider-thumb {
 			-webkit-appearance: none;
 			appearance: none;
-			width: 18px;
-			height: 18px;
+			width: 24px;
+			height: 24px;
 			border-radius: 50%;
 			border: 3px solid #5bc0de;
 			background: #5bc0de;
@@ -111,8 +115,8 @@ function new_k10_shortcode() {
 		}
 
 		input[type=range]::-moz-range-thumb {
-			width: 18px;
-			height: 18px;
+			width: 24px;
+			height: 24px;
 			border-radius: 50%;
 			border: 3px solid #5bc0de;
 			background: #5bc0de;
@@ -129,7 +133,6 @@ function new_k10_shortcode() {
 			color: white;
 			border: none;
 			border-radius: 5px;
-			padding: 8px 15px;
 			font-size: 16px;
 			cursor: pointer;
 			transition: background-color 0.15s ease-in-out;
@@ -172,8 +175,6 @@ function new_k10_shortcode() {
 		}
 
 		#k10-result {
-		  font-size: 18px;
-		  font-weight: bold;
 		  margin-top: 20px;
 		  margin-bottom: 20px;
 		  text-align: center;
@@ -187,7 +188,8 @@ function new_k10_shortcode() {
 			.retake-button-container {
 			  display: flex;
 			  justify-content: center;
-			  margin-top: 20px;
+			  margin-top: 0px;
+			  margin-bottom: 30px;
 			}
 		.progress-bar-wrapper {
 		  width: 50%; /* Update this line */
@@ -254,21 +256,45 @@ function new_k10_shortcode() {
 			align-items: center;
 			width: 100%;
 		}
+		.entry-content ul{
+   list-style-type: none;
+}
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	text-align: center;
+  }
 	</style>';
-	
-	$output .= '<div class="k10-header fade-in">';
-    $output .= '<img src="https://cdn.pixabay.com/photo/2017/11/26/15/16/smiley-2979107_1280.jpg" alt="Placeholder Image">';
-    $output .= '</div>';
-	
+		
 	// Introduction page
+	
     $output .= '<div id="intro-page" class="question slide-up">';
-    $output .= '<h2>Welcome to the Mental Health Test</h2>';
-	$output .= '<div style="text-align:left;"><p>This test is designed to help you assess your level of psychological distress. It consists of 10 questions that ask about your feelings and experiences over the past four weeks. By answering these questions honestly, you will get a score that can help you identify if you are experiencing low, high, or very high levels of psychological distress.</p><p>Mental health is an important aspect of overall wellbeing, and it is important to take care of your mental health just as you take care of your physical health. The Mental Health Test is a tool that can help you understand your current mental health status and identify areas where you may need to seek additional support or treatment. It is important to remember that this test is not a substitute for professional advice or diagnosis, but it can be a helpful starting point for addressing any mental health concerns you may have.</p><p>We encourage you to take this test in a quiet and comfortable place, where you can reflect on your feelings and thoughts honestly. Take your time to answer each question thoughtfully, as your answers will determine your score. Remember, there are no right or wrong answers, and your responses will be kept confidential.</p></div>';
+	 $output .= '<h2 style="margin-bottom:40px;">Welcome to the Mental Health Test</h2>';
+	$output .= '<div class="container">
+				  <div class="row">
+					<div class="col-sm">
+					<img src="https://img.icons8.com/ios/50/null/checked--v1.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;">This test consists of 10 questions. By answering these questions honestly, you will get a score that can help you identify if you are experiencing low, high, or very high levels of psychological distress.</p>
+					</div>
+					<div class="col-sm">
+					<img src="https://img.icons8.com/ios/50/null/light-on--v1.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;">It is important to remember that this test is not a substitute for professional advice or diagnosis, but it can be a helpful starting point for addressing any mental health concerns you may have.</p>
+					</div>
+					<div class="col-sm">
+					<img src="https://img.icons8.com/ios/50/null/pencil--v1.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;">We encourage you to take this test in a quiet and comfortable place. Take your time to answer each question thoughtfully. Remember, there are no right or wrong answers, and your responses will be kept confidential.</p>
+					</div>
+				  </div>
+				</div>';
+	$output .= '<div class="k10-header fade-in">';
+    $output .= '<img src="https://images.pexels.com/photos/5668869/pexels-photo-5668869.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" style="max-height: 400px; width: auto;" overflow: hidden;>';
+    $output .= '</div>';
     $output .= '<button type="button" id="start-test" onclick="startTest()">Start Test</button>';
     $output .= '</div>';
 	
 	foreach ($k10_questions as $index => $question) {
-		$output .= '<div class="question hidden slide-up">';
+		$output .= '<div class="question hidden slide-up" style="padding: 0px 50px 0px 50px;">';
 		$output .= '<p><b>' . ($index + 1) . '. ' . $question . '</b></p>';
 		$output .= '<div class="scale-container">'; // Add the scale-container div
 
@@ -303,19 +329,30 @@ function new_k10_shortcode() {
         </div>
     </div>
             </div>';
+	
 	$output .= '	<div class="k10-result-container">
   						<div id="k10-result"></div>
     				</div>
 					<div class="meter-container">
 						<div id="k10-meter" class="hidden">
-						
-							  <div class="chartBox">
+							<div class="chartBox">
 								<canvas id="myChart"></canvas>
 							  </div>
-						
 						</div>
+					</div>					
+					<div class="k10-recommendation-container hidden" id="k10-recommendation-container" style="padding:50px;">
+  						<div id="k10-recommendation"></div>
+						<div class="row justify-content-center">
+					<div class="col-md-4 centered-content">
+					<img src="https://img.icons8.com/external-parzival-1997-detailed-outline-parzival-1997/50/null/external-social-digital-globalization-parzival-1997-detailed-outline-parzival-1997.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;"><a href=\"/social-connections\"><b>Social Connections</b></a>: <br>You will find a range of interesting activities for you to strengthen relationships with your friends and family. You will also find information on community activities where you can meet new people and expand your social circle.</p>
 					</div>
-
+					<div class="col-md-4 centered-content">
+					<img src="https://img.icons8.com/external-smashingstocks-mixed-smashing-stocks/50/null/external-diet-farming-smashingstocks-mixed-smashing-stocks.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;"><a href=\"/self-management-strategies\"><b>Self-Management Strategies</b></a>: <br>You will get personalised advice on lifestyle behaviors, such as physical activities and diet habits, which can have a positive impact on your mental health.</p>
+					</div>
+				  </div>
+    				</div>
     				<div class="retake-button-container">
   						<button type="button" id="retake-button" class="hidden fade-in" onclick="retakeTest()">Retake the test</button>
     				</div>';
@@ -327,7 +364,7 @@ function new_k10_shortcode() {
 	<script>
 	var introPage = true;
 	var currentPage = 0;
-	var questionsPerPage = [3, 3, 4];
+	var questionsPerPage = [3,3,4];
 	var totalQuestions = 10;
 	
 	function startTest() {
@@ -339,10 +376,10 @@ function new_k10_shortcode() {
 	
 	function updateProgressBar() {
 			var totalPages = questionsPerPage.length;
-			var completedQuestions = 0;
+			var completedQuestions = questionsPerPage[0];
 
 			for (var i = 0; i < currentPage; i++) {
-				completedQuestions += questionsPerPage[i];
+				completedQuestions += questionsPerPage[i+1];
 			}
 									
 			var progressPercentage = (completedQuestions / totalQuestions) * 100;
@@ -353,6 +390,8 @@ function new_k10_shortcode() {
 			progressBar.style.width = progressPercentage + "%";
 			progressText.innerHTML = Math.round(progressPercentage) + "%";
 		}
+
+
 
 	function showPage(page) {
         if (!introPage) {
@@ -406,6 +445,7 @@ function new_k10_shortcode() {
 			input.value = "3";
 		});
 		document.getElementById("k10-result").innerHTML = "";
+		document.getElementById("k10-recommendation").innerHTML = "";	
 
 		updateProgressBar();
 		showPage(0);
@@ -423,7 +463,7 @@ function new_k10_shortcode() {
 		}
 		
 		document.getElementById("k10-meter").classList.add("hidden");
-		
+		document.getElementById("k10-recommendation-container").classList.add("hidden");
 		document.getElementById("retake-button").classList.add("hidden");
 	}
 	
@@ -460,9 +500,20 @@ function new_k10_shortcode() {
 	localStorage.setItem("score", score);
 	initializeChart();
 	var k10Result = document.getElementById("k10-result");
-    k10Result.innerHTML = "<h2>Thank you for taking the test</h2></br>Your score is: " + score + "</br>Your level of psychological distress is: " + level;
+    k10Result.innerHTML = "<h2>Thank you for completing the test</h2>" + "Your score is: <b>" + score + "</b><br>" + "Your level of psychological distress is: <b>" + level + "</b>";
+	var k10Recommendation = document.getElementById("k10-recommendation");
+	 k10Recommendation.innerHTML = "<p style=\"margin-bottom:30px;\"><b>Based on the total score obtained, the level of psychological distress into 3 groups:</b></p>"+
+"<ul>" +
+  "<li style=\"margin-bottom:20px;\"><b>Low (10-24):</b> Individuals in this category have a <b>low</b> level of psychological distress. Generally, they may not require any professional intervention for mental health issues. However, it is still essential to maintain good mental health practices such as self-care, regular exercise, healthy diet, and social connections to continue feeling well.</li>" + "<li style=\"margin-bottom:20px;\"><b>High (25-29):</b> A <b>high</b> level of psychological distress may indicate more severe symptoms of anxiety or depression. People in this category should consider seeking support from friends, family, or mental health professionals. They may also benefit from exploring community resources, support groups, and self-help materials. Professional help, such as therapy or counseling, can be particularly beneficial for this group.</li>" +
+"<li style=\"margin-bottom:30px;\"><b>Very High (30-50):</b> Individuals with <b>very high</b> psychological distress are likely experiencing significant mental health challenges. It is crucial for them to seek professional help immediately, as they may be at risk for serious mental health conditions such as major depressive disorder, generalized anxiety disorder, or other related issues. Accessing appropriate support, treatment, and resources can make a significant difference in their mental health journey.</li>"+ "</ul>" +
+
+"<p style=\"margin-bottom:40px;\"><b>We recommend exploring the following resources to help improve your mental health and well-being:</b></p>";
+
 	document.getElementById("k10-meter").classList.remove("hidden");
+	document.getElementById("k10-recommendation-container").classList.remove("hidden");
 	k10Result.classList.add("fade-in");
+	k10Recommendation.classList.add("fade-in");
+	document.getElementById("k10-meter").classList.add("fade-in");
 	var progressBar = document.querySelector(".progress-bar");
     var progressText = document.querySelector(".progress-percentage");
     progressBar.style.width = "100%";

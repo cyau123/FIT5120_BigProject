@@ -41,6 +41,11 @@ function show_kinder_on_map( $atts ) {
     			<p><b>Destination:</b></p>
 				<input id="selected-kinder" class="control kinder-map-text" type="text" placeholder="Please select a Kinder on map or from the list" readonly style="background-color: #eee;">
     			<button id="search-route-btn">Search Route</button>
+				<button id="open-in-maps-btn">Open in Google Maps</button>
+				<div id="route-info" class="route-info" style="display:block;">
+					<p><b>Driving distance:</b> -</p>
+					<p><b>Driving time:</b> -</p>
+				</div>
 			</div>
 			<div class="kinder-container" style="background-color: #E9F4F6; padding:15px; border-radius: 5px; box-shadow: 0px 1px 2px rgba(0,0,0,0.1); ">
 				<h3 class="kinder-title">Kinder locations</h3>
@@ -48,7 +53,7 @@ function show_kinder_on_map( $atts ) {
                 	<?php foreach ( $kinder_locations as $i => $location ) : ?>
                     	<div class="kinder-box">
                         	<li class="kinder-location" data-lat="<?php echo $location->latitude; ?>" data-lng="<?php echo $location->longitude; ?>">
-                            	<h5><?php echo addslashes($location->name); ?></h5>
+                            	<h5><?php echo esc_html($location->name); ?></h5>
                             	<p style="font-size:16px;"><b>Address:</b> <?php echo addslashes($location->address); ?></p>
                             	<p style="font-size:16px;"><b>Phone:</b> <?php echo addslashes($location->phone); ?></p>
                             	<p style="font-size:16px;"><b>Email:</b> <a href="mailto:<?php echo addslashes($location->email); ?>" onclick="event.stopPropagation();"><?php echo addslashes($location->email); ?></a></p>
@@ -88,11 +93,13 @@ function show_kinder_on_map( $atts ) {
 
         <?php foreach ( $kinder_locations as $i => $location ) : ?>
             var contentString<?php echo $i ?> = '<div id="content">'+
-              '<h5 id="firstHeading " class="firstHeading"><?php echo addslashes($location->name); ?></h5>'+
+              '<h5 id="firstHeading " class="firstHeading"><?php echo esc_html($location->name); ?></h5>'+
               '<div id="bodyContent">'+
               '<p style="font-size:16px;"><b>Address:</b> <?php echo addslashes($location->address); ?></p>'+
               '<p style="font-size:16px;"><b>Phone:</b> <?php echo addslashes($location->phone); ?></p>'+
              '<p style="font-size:16px;"><b>Email:</b> <a href="mailto:<?php echo addslashes($location->email); ?>" onclick="event.stopPropagation();"><?php echo addslashes($location->email); ?></a></p>'+
+				'<p style="font-size:16px;"><a href="#" class="infowindow-search-route" data-index="<?php echo $i ?>">Search Route</a></p>' +
+			'<p style="font-size:16px;"><a href="#" class="infowindow-open-in-maps" data-index="<?php echo $i ?>">Open in Google Maps</a></p>' +
               '</div>'+
               '</div>';
 
@@ -133,11 +140,47 @@ function show_kinder_on_map( $atts ) {
 		
 		            // Scroll the list to make the selected item visible
                     selectedBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-					
 					selectedDestination = { lat: lat, lng: lng };
 					
 					var kinderName = '<?php echo addslashes($location->name); ?>';
 					document.getElementById('selected-kinder').value = kinderName;
+					
+					//start
+					google.maps.event.addListener(infowindow, 'domready', function() {
+				document.querySelector('.infowindow-search-route[data-index="' + index + '"]').addEventListener('click', function(e) {
+					e.preventDefault();
+
+					// Execute the same functionality as the "Search Route" button
+					var origin = searchInput.value;
+					if (!origin) {
+						window.alert('Please enter your address.');
+						return;
+					}
+					if (!selectedDestination) {
+						window.alert('Please select a Kinder on map or from the list.');
+						return;
+					}
+					calculateAndDisplayRoute(directionsService, directionsRenderer, origin, selectedDestination);
+				});
+
+				document.querySelector('.infowindow-open-in-maps[data-index="' + index + '"]').addEventListener('click', function(e) {
+					e.preventDefault();
+
+					// Execute the same functionality as the "Open in Google Maps" button
+					var origin = searchInput.value;
+					if (!origin) {
+						window.alert('Please enter your address.');
+						return;
+					}
+					if (!selectedDestination) {
+						window.alert('Please select a Kinder on map or from the list.');
+						return;
+					}
+					openGoogleMaps(origin, selectedDestination);
+				});
+			});
+//end
+					
 				});
 			})(marker, infowindows[<?php echo $i ?>], <?php echo $i ?>, <?php echo $location->latitude; ?>, <?php echo $location->longitude; ?>);
 
@@ -221,6 +264,11 @@ function show_kinder_on_map( $atts ) {
         		});
 			}
 		
+		function openGoogleMaps(origin, destination) {
+				var mapsUrl = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origin) + "&destination=" + encodeURIComponent(destination.lat + "," + destination.lng);
+				window.open(mapsUrl, "_blank");
+			}
+		
 			document.getElementById('search-route-btn').addEventListener('click', function() {
 				var origin = searchInput.value;
 				
@@ -234,6 +282,20 @@ function show_kinder_on_map( $atts ) {
     			}
 
    				calculateAndDisplayRoute(directionsService, directionsRenderer, origin, selectedDestination);
+			});
+		
+		document.getElementById('open-in-maps-btn').addEventListener('click', function() {
+				var origin = searchInput.value;
+				
+				if (!origin) {
+       				window.alert('Please enter your address.');
+        			return;
+    			}
+				if (!selectedDestination) {
+        			window.alert('Please select a Kinder on map or from the list.');
+        			return;
+    			}
+   				openGoogleMaps(origin, selectedDestination);
 			});
 	}
 	</script>

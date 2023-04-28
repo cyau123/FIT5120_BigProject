@@ -61,6 +61,9 @@ function family_composition_shortcode($atts) {
         displayResults();
     }
         }
+		function resetPage() {
+                        window.location.href = "https://financialguidevic.link/mental-health/self-management-strategies";
+                    }
     </script>
 <div class="form-bg-container">
     <form onsubmit="event.preventDefault(); handleSubmit();" class="wp-activities-search-form">
@@ -84,6 +87,7 @@ function family_composition_shortcode($atts) {
 		<div class="buttons-row row">
   			<div class="form-group">
   				<button type="submit" class="btn btn-primary search-btn" value="submit">Search</button>
+				<button type="button" class="btn btn-secondary reset-btn" onclick="resetPage()">Reset</button>
 	  		</div>
 		</div>
 	</form>

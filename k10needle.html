@@ -29,9 +29,9 @@
         justify-content: center;
       }
       .chartBox {
-    width: 350px; /* Change width to resize the chart container */
-    height: 350px; /* Change height to resize the chart container */
-    padding: 20px;
+    width: 360px; /* Change width to resize the chart container */
+    height: 360px; /* Change height to resize the chart container */
+    padding: 15px;
     border-radius: 20px;
     border: solid 3px rgba(54, 162, 235, 1);
     background: white;
@@ -47,6 +47,16 @@
     <script>
    var myChart=null;
 
+function getLabelFromScore(score) {
+  if (score >= 10 && score <= 24) {
+    return 'Low';
+  } else if (score >= 25 && score <= 29) {
+    return 'High';
+  } else if (score >= 30 && score <= 50) {
+    return 'Very High';
+  }
+}
+
 function initializeChart() {
    if (myChart) {
     myChart.destroy(); // Destroy the existing chart if there is one
@@ -56,10 +66,10 @@ function initializeChart() {
     
     // setup 
     const data = {
-      labels: ['Low', 'High', 'Very High'],
+      labels: ['Low (10-24)', 'High (25-29)', 'Very High (30-50)'],
       datasets: [{
         label: '',
-        data: [15, 5, 21],
+        data: [15, 5, 20],
         backgroundColor: [
           'rgba(75, 192, 192, 1)',
           'rgba(255, 206, 86, 1)',
@@ -67,11 +77,11 @@ function initializeChart() {
         ],
         needleValue: storedScore-10,
         borderColor: 'white',
-        borderWidth: 2,
+        borderWidth: 0,
         cutout: '95%',
         circumference :180,
         rotation: 270,
-        borderRadius:5
+        borderRadius:0
       }]
     };
     
@@ -107,36 +117,42 @@ function initializeChart() {
             ctx.fill();
             ctx.restore();
             
-            ctx.font = '50px Helvetica';
+            ctx.font = '25px Helvetica';
             ctx.fillStyle = '#444';
             //label change value here
-            ctx.fillText(storedScore, cx, cy +50);
+            ctx.fillText(storedScore + ' - ' + getLabelFromScore(storedScore), cx, cy +40);
             ctx.textAlign = 'center';
             ctx.restore();
         }
     }
     // config 
-    const config = {
-      type: 'doughnut',
-      data,
-      options: {
-          plugins:{
-              legend:{
-                  display: false
-              },
-              tooltip: {
-                  yAlign: 'bottom',
+   const config = {
+  type: 'doughnut',
+  data,
+  options: {
+      plugins:{
+          legend:{
+              position: 'top',
+              labels: {
+                  font: {
+                      size: 14
+                  },
+                  boxWidth: 15
+              }
+          },
+          tooltip: {
+              yAlign: 'bottom',
                   displayColors: false,
                   callbacks:{
                       label: function(tooltipItem, data, value){
                           return 'Level of distress';
                       }
                   }
-                }
           }
-      },
-      plugins: [gaugeNeedle]
-    };
+      }
+  },
+  plugins: [gaugeNeedle]
+};
 
     // render init block
     myChart = new Chart(

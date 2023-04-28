@@ -84,6 +84,8 @@ if (isset($_GET['wp_activities_category']) && !empty($_GET['wp_activities_catego
 $results = $wpdb->get_results($sql);
 
 $items_per_page = 6;
+	
+
 
 if (count($results) > 0) {
     $output .= '<div class="container">';
@@ -114,7 +116,13 @@ if (count($results) > 0) {
 
 		$output .= '</div></div>'; // Close the container div
 	} else {
+	$output .= '<div class="outside-container"><div class="container">';
 		$output .= '<p>No results found.</p>';
+	$output .= '<div class="pagination">';
+		$output .= '<button type="button" class="btn btn-primary previous-btn" disabled>Previous</button>';
+		$output .= '<button type="button" class="btn btn-primary next-btn" disabled>Next</button>';
+		$output .= '</div>';
+		$output .= '</div></div>'; 
 	}
 
     // Add JavaScript function to reset the page
@@ -150,7 +158,7 @@ if (count($results) > 0) {
     // Call the updatePagination function on page load
     updatePagination();
                     function resetPage() {
-                        window.location.href = "https://financialguidevic.link/search-test";
+                        window.location.href = "https://financialguidevic.link/mental-health/social-connections";
                     }
                 </script>';
 
