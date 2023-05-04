@@ -55,7 +55,7 @@
 }
 #map {
     width: 100%;
-    height: 1000px;
+    height: 900px;
 	  border-radius: 5px;
 }
 .ast-header-custom-item .ast-menu-justify > ul li > a {
@@ -65,8 +65,20 @@ a:link {
   text-decoration: none!important;
 }
 
+@media (max-width: 992px) {
+    .wp-coursesdatabase-results {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .wp-coursesdatabase-results {
+        grid-template-columns: 1fr; /* One column on small screens */
+    }
+}
+
 #kinder-list {
-  height: 400px;
+  height: 350px;
   overflow-y: scroll;
 	padding:0px;
 }
@@ -210,6 +222,7 @@ p, .entry-content p{
 	border-color: #5bc0de;
 	border-width: 1.8px;
 	color: #5bc0de;
+	margin: 0 5px;
 }
 .individual-page-btn:hover{
 	background-color:#5bc0de;
