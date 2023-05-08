@@ -14,6 +14,7 @@ function employment_quiz_shortcode() {
   $output .= '<label for="industry2">Education</label><br>';
   $output .= '<input type="radio" id="industry3" name="industry" value="healthcare">';
   $output .= '<label for="industry3">Health Care and Social Assistance</label><br>';
+	$output .= '<p id="alert-message1" style="color: red; display: none;"></p>';
   $output .= '<button id="next-button">Next</button>';
   $output .= '</div>';
 
@@ -23,6 +24,7 @@ function employment_quiz_shortcode() {
   $output .= '<datalist id="occupation-list">';
   // options will be added dynamically by JavaScript
   $output .= '</datalist>';
+	$output .= '<p id="alert-message2" style="color: red; display: none;"></p>';
 	 $output .= '<button id="previous-button2">Previous</button>';
 	 $output .= '<button id="next-button2">Next</button>';
   $output .= '</div>';
@@ -39,6 +41,7 @@ function employment_quiz_shortcode() {
 	$output .= '<label for="education4">Certificate III/IV</label><br>';
 	$output .= '<input type="radio" id="education5" name="education" value="High School">';
 	$output .= '<label for="education5">High school</label><br>';
+	$output .= '<p id="alert-message3" style="color: red; display: none;"></p>';
 	$output .= '<button id="previous-button3">Previous</button>';
 	$output .= '<button id="next-button3">Next</button>';
 	$output .= '</div>';
@@ -81,6 +84,8 @@ $output .= '</div>';
   $output .= '});';
 
   $output .= '$("#next-button").click(function() {';
+	 $output .= 'if ($("input[name=\'industry\']:checked").length > 0) {';
+	
   $output .= '  selectedIndustry = $("input[name=\'industry\']:checked").val();';
   $output .= '  $.ajax({';
   $output .= '    type: "POST",';
@@ -116,6 +121,11 @@ $output .= '</div>';
   $output .= '      alert("An error occurred while fetching the job positions.");';
   $output .= '    }';
   $output .= '  });';
+	
+	 $output .= ' } else {';
+    $output .= ' $("#alert-message1").text("Please select an industry before proceeding.").show();';
+   $output .= '}';
+	
   $output .= '});';
 	
 	$output .= '$("#previous-button2").click(function() {';
@@ -124,8 +134,14 @@ $output .= '</div>';
 $output .= '});';
 
 $output .= '$("#next-button2").click(function() {';
+		 $output .= 'if ($("#occupation-input").val().length > 0) {';
+	
  $output .= ' $("#question2").hide();';
 $output .= '  $("#question3").show();';
+	
+		 $output .= ' } else {';
+    $output .= ' $("#alert-message2").text("Please enter a job position before proceeding.").show();';
+   $output .= '}';
 $output .= '});';
 
 $output .= '$("#previous-button3").click(function() {';
@@ -156,10 +172,18 @@ $output .= '      return -1;';
 $output .= '  }';
 $output .= '}';
 	
-$output .= '        $("#next-button3").click(function() {                             ';
-	$output .= '     $("#question3").hide();                                ';
-	$output .= '      $("#question4").show();                               ';
-	$output .= '      });                               ';
+$output .= '$("#next-button3").click(function() {';
+	
+	 $output .= 'if ($("input[name=\'education\']:checked").length > 0) {';
+	
+	$output .= '     $("#question3").hide();';
+	$output .= '      $("#question4").show();';
+	 $output .= ' } else {';
+    $output .= ' $("#alert-message3").text("Please select a level of education before proceeding.").show();';
+   $output .= '}';
+	$output .= '      });';
+	
+	
 	$output .= '       $("#previous-button4").click(function() {                              ';
 	$output .= '      $("#question4").hide();                               ';
 	$output .= '      $("#question3").show();                            ';
@@ -167,7 +191,7 @@ $output .= '        $("#next-button3").click(function() {                       
 	
 
 // Update the next-button4 click function
-$output .= '$("#next-button4").click(function() {';
+$output .= '$("#next-button4").click(function() {';	
 $output .= '  var selectedEducationText = $("input[name=\'education\']:checked").val();';
 $output .= '  var selectedEducation = educationTextToRank(selectedEducationText);';
 $output .= '  var selectedOccupation = $("#occupation-input").val();';
@@ -200,7 +224,7 @@ $output .= '    },';
 $output .= '    error: function() {';
 $output .= '      alert("An error occurred while fetching the most_position.");';
 $output .= '    }';
-$output .= '  });';
+$output .= '  });';	
 $output .= '});';
 
 	

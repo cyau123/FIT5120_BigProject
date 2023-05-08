@@ -278,6 +278,31 @@ function new_k10_shortcode() {
   color: white;
   border-radius: 5px 5px 0px 0px;
 }
+.low {
+    background-color: #fff;
+    border: solid green;
+    border-width: 1.5px 1.5px 1.5px 7px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.high {
+    background-color: #fff;
+    border: solid orange;
+    border-width: 1.5px 1.5px 1.5px 7px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.veryhigh {
+    background-color: #fff;
+    border: solid red;
+    border-width: 1.5px 1.5px 1.5px 7px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
 	</style>';
 		
 	// Introduction page
@@ -285,7 +310,7 @@ function new_k10_shortcode() {
     $output .= '<div id="intro-page" class="question slide-up">';
 	 $output .= '<h2 style="margin-bottom:40px;">Welcome to the Mental Health Test</h2>';
 	$output .= '<div class="container">
-				  <div class="row">
+				 <div class="row">
 					<div class="col-sm">
 					<div class="element"> </div>
 					<div class="element">
@@ -303,8 +328,8 @@ function new_k10_shortcode() {
 					<div class="element">
 					<img src="https://img.icons8.com/ios/50/null/pencil--v1.png" style="margin-bottom:30px;"/>
 					  <p style="margin-bottom:30px;">We encourage you to take this test in a quiet and comfortable place. Take your time to answer each question thoughtfully. Remember, there are no right or wrong answers, and your responses will be kept confidential.</p></div>
+					  </div>
 					</div>
-				  </div>
 				</div>';
 	$output .= '<div class="k10-header fade-in">';
     $output .= '<img src="https://images.pexels.com/photos/5668869/pexels-photo-5668869.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" style="max-height: 400px; width: auto;" overflow: hidden;>';
@@ -360,7 +385,20 @@ function new_k10_shortcode() {
 						</div>
 					</div>					
 					<div class="k10-recommendation-container hidden" id="k10-recommendation-container" style="padding:50px;">
-  						<div id="k10-recommendation"></div>
+  						<div id="k10-recommendation">
+						<p style="margin-bottom:30px;"><b>Based on the total score obtained, the level of psychological distress into 3 groups:</b></p>
+					<div class="low">
+					<b>Low (10-24):</b> Individuals in this category have a <b>low</b> level of psychological distress. Generally, they may not require any professional intervention for mental health issues. However, it is still essential to maintain good mental health practices such as self-care, regular exercise, healthy diet, and social connections to continue feeling well.
+					</div>
+					<div class="high">
+					<b>High (25-29):</b> A <b>high</b> level of psychological distress may indicate more severe symptoms of anxiety or depression. People in this category should consider seeking support from friends, family, or mental health professionals. They may also benefit from exploring community resources, support groups, and self-help materials. Professional help, such as therapy or counseling, can be particularly beneficial for this group.
+					</div>
+					<div class="veryhigh">
+					<b>Very High (30-50):</b> Individuals with <b>very high</b> psychological distress are likely experiencing significant mental health challenges. It is crucial for them to seek professional help immediately, as they may be at risk for serious mental health conditions such as major depressive disorder, generalized anxiety disorder, or other related issues. Accessing appropriate support, treatment, and resources can make a significant difference in their mental health journey.
+					</div>
+					<p style="margin-bottom:25px;"><b>We recommend looking into different resources to improve your mental health and well-being. Please <a href="https://financialguidevic.link/mental-health/mental-health-self-test/#mental-health-resources">click here</a> to access a range of helpful information.</b></p>
+					</div>
+				  </div>
     				<div class="retake-button-container">
   						<button type="button" id="retake-button" class="hidden fade-in" onclick="retakeTest()">Retake the test</button>
     				</div>';
@@ -453,7 +491,6 @@ function new_k10_shortcode() {
 			input.value = "3";
 		});
 		document.getElementById("k10-result").innerHTML = "";
-		document.getElementById("k10-recommendation").innerHTML = "";	
 
 		updateProgressBar();
 		showPage(0);
@@ -511,12 +548,7 @@ function new_k10_shortcode() {
 	var k10Result = document.getElementById("k10-result");
     k10Result.innerHTML = "<h2>Thank you for completing the test</h2>" + "Your score is: <b>" + score + "</b><br>" + "Your level of psychological distress is: <b>" + level + "</b>";
 	var k10Recommendation = document.getElementById("k10-recommendation");
-	 k10Recommendation.innerHTML = "<p style=\"margin-bottom:30px;\"><b>Based on the total score obtained, the level of psychological distress into 3 groups:</b></p>"+
-"<ul>" +
-  "<li style=\"margin-bottom:20px;\"><b>Low (10-24):</b> Individuals in this category have a <b>low</b> level of psychological distress. Generally, they may not require any professional intervention for mental health issues. However, it is still essential to maintain good mental health practices such as self-care, regular exercise, healthy diet, and social connections to continue feeling well.</li>" + "<li style=\"margin-bottom:20px;\"><b>High (25-29):</b> A <b>high</b> level of psychological distress may indicate more severe symptoms of anxiety or depression. People in this category should consider seeking support from friends, family, or mental health professionals. They may also benefit from exploring community resources, support groups, and self-help materials. Professional help, such as therapy or counseling, can be particularly beneficial for this group.</li>" +
-"<li style=\"margin-bottom:30px;\"><b>Very High (30-50):</b> Individuals with <b>very high</b> psychological distress are likely experiencing significant mental health challenges. It is crucial for them to seek professional help immediately, as they may be at risk for serious mental health conditions such as major depressive disorder, generalized anxiety disorder, or other related issues. Accessing appropriate support, treatment, and resources can make a significant difference in their mental health journey.</li>"+ "</ul>" +
-
-"<p style=\"margin-bottom:40px;\"><b>We recommend looking into different resources to improve your mental health and well-being. Please " + "<a href=\"https://financialguidevic.link/mental-health/mental-health-self-test/#mental-health-resources\">click here</a>" + " to access a range of helpful information.</b></p>";
+	
 
 	document.getElementById("k10-meter").classList.remove("hidden");
 	document.getElementById("k10-recommendation-container").classList.remove("hidden");
