@@ -4,15 +4,198 @@ function include_chartjs() {
 add_action('wp_enqueue_scripts', 'include_chartjs');
 
 function employment_quiz_shortcode() {
-  $output = '<div id="quiz-intro" style="background-image: url(\'https://img.freepik.com/free-photo/silhouette-person-standing-beach-cloudy-sky-during-breathtaking-sunset_181624-13424.jpg?w=1800&t=st=1683160635~exp=1683161235~hmac=4b26cc61b0d757aa93075be7e43a01c3cfd0bba7af0a4fa2f2b9947cd0b01d2a\');">';
-  $output .= '<div style="background-color: rgba(0, 0, 0, 0.5);">';
-  $output .= '<h2 style="color: #fff; text-align: center;">Path to Employment: Assessing Your Qualifications for Job Positions in Victoria</h2>';
+	$output = '
+	<style>
+		#quiz-intro {
+			  position: relative;
+			  max-width: 100%;
+			  min-height: 840px;
+			  padding: 60px;
+			  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+			  border-radius: 5px;
+			  background-color: #E9F4F6;
+			}
+		#intro-page-em {
+		  text-align: center;
+		  padding: 0px 20px 0px 20px;
+		  margin-bottom: 0px;
+		}
+		.element {
+  padding: 10px;
+  background-color: white;
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+}
+
+.element:first-child {
+  background-color: #5bc0de;
+  color: white;
+  border-radius: 5px 5px 0px 0px;
+}
+.em-intro-photo{
+			padding: 20px 20px 0px 20px;
+			margin-bottom: 50px;
+			margin-top: 10px;
+		}
+#question1, #question2, #question3, #question4, #result{
+	min-height: 640px;
+			  padding: 60px;
+			  box-shadow: 2px 0 2px rgba(0, 0, 0, 0.1), -2px 0 2px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1);
+			  border-radius: 5px;
+}
+		button {
+			background-color: #5bc0de;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.15s ease-in-out;
+		}
+
+		button:focus {
+		  background-color: #5bc0de;
+		  outline: none;
+		}
+		
+		button:hover {
+			background-color: #045CB4;
+		}
+@keyframes fadeIn {
+			  0% {
+				opacity: 0;
+			  }
+			  100% {
+				opacity: 1;
+			  }
+			}
+
+			.fade-in {
+			  animation-name: fadeIn;
+			  animation-duration: 2s;
+			  animation-fill-mode: both;
+			}
+			.slide-up {
+		  animation-name: slide-up;
+		  animation-duration: 1s;
+		  animation-timing-function: ease-out;
+		  animation-fill-mode: forwards;
+		}
+
+		@keyframes slide-up {
+		  from {
+			transform: translateY(100%);
+		  }
+		  to {
+			transform: translateY(0%);
+		  }
+		}
+		@keyframes slide-left {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.slide-left {
+  animation-name: slide-left;
+  animation-duration: 1s; /* Adjust the duration as needed */
+  animation-fill-mode: both;
+}
+
+.slide-right {
+  animation-name: slide-right;
+  animation-duration: 1s; /* Adjust the duration as needed */
+  animation-fill-mode: both;
+}
+  .rating-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .rating-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .rating-rectangle {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  .decline {
+    background-color: #FF3131;
+  }
+
+  .stable {
+    background-color: #FFDE59;
+  }
+
+  .moderate {
+    background-color: #C1FF72;
+  }
+
+  .strong {
+    background-color: #7ED957;
+  }
+
+  .very-strong {
+    background-color: #00BF63;
+  }
+
+	</style>';
+  $output .= '<div id="quiz-intro" class="slide-up">';
+	$output .= '<div id="intro-page-em">';
+$output .= '<h2 style="margin-bottom:40px;">Welcome to the Victoria Job Qualification Assessment</h2>';
+	
+	$output .= '<div class="container">
+				 <div class="row">
+					<div class="col-sm">
+					<div class="element"> </div>
+					<div class="element">
+					<img src="https://img.icons8.com/ios/50/null/checked--v1.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;">This test consists of 4 questions. By answering these questions honestly, you will get insights into whether your qualifications meet the requirements for your desired job in Victoria.</p></div>
+					</div>
+					<div class="col-sm">
+					<div class="element"> </div>
+					<div class="element">
+					<img src="https://img.icons8.com/ios/50/null/light-on--v1.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;">Please note that job specific requirements may vary. It is recommended to conduct further research and consult job listings to explore opportunities in your field.</p></div>
+					</div>
+					<div class="col-sm">
+					<div class="element"> </div>
+					<div class="element">
+					<img src="https://img.icons8.com/ios/50/null/pencil--v1.png" style="margin-bottom:30px;"/>
+					  <p style="margin-bottom:30px;">The quiz will also present informative insights, including distribution of gender, employment types, current and future employment levels for your desired job position.</p></div>
+					  </div>
+					</div>
+				</div>';
+	$output .= '<div class="em-intro-photo">';
+    $output .= '<img src="https://cdn.pixabay.com/photo/2018/11/02/10/51/job-3790033_960_720.jpg" style="max-height: 400px; width: auto; overflow: hidden;">';
+    $output .= '</div>';
+	
   $output .= '<button id="start-quiz-button" style="margin: 0 auto; display: block;">Start Quiz</button>';
   $output .= '</div>';
   $output .= '</div>';
 
 $output .= '<div id="quiz-header" style="display: none;">';
-$output .= ' <h2 class="qualification-assessment" style="color:white;">Qualification Assessment</h2>';
+$output .= ' <h2 class="qualification-assessment">Qualification Assessment</h2>';
 $output .= '<div class="q-progress-bar-container">';
 
 $output .= '<div class="q-label-container">';
@@ -28,35 +211,56 @@ $output .= '</div>';
 $output .= '</div>';
 $output .= '</div>';
 	
-  $output .= '<div id="question1" style="display: none; padding: 40px;">';
-  $output .= '<h2>1. Which industry do you want to work in?</h2>';
-  $output .= '<input type="radio" id="industry1" name="industry" class="radio-button" value="administrative">';
-  $output .= '<label for="industry1" class="mc-label">Administrative and Support Service</label><br>';
-  $output .= '<input type="radio" id="industry2" name="industry" class="radio-button" value="education">';
-  $output .= '<label for="industry2" class="mc-label">Education</label><br>';
-  $output .= '<input type="radio" id="industry3" name="industry" class="radio-button" value="healthcare">';
-  $output .= '<label for="industry3" class="mc-label">Health Care and Social Assistance</label><br>';
-	$output .= '<p id="alert-message1" style="color: red; display: none; margin-top: 15px;  margin-left: 30px;"></p>';
+$output .= '<div id="question1" style="display: none; padding: 40px;">';
+$output .= '<div class="row">';
+$output .= '<div class="col-sm slide-right">';
+$output .= '<h4>1. Which industry do you want to work in?</h4>';
+$output .= '<input type="radio" id="industry1" name="industry" class="radio-button" value="administrative">';
+$output .= '<label for="industry1" class="mc-label">Administrative and Support Service</label><br>';
+$output .= '<input type="radio" id="industry2" name="industry" class="radio-button" value="education">';
+$output .= '<label for="industry2" class="mc-label">Education</label><br>';
+$output .= '<input type="radio" id="industry3" name="industry" class="radio-button" value="healthcare">';
+$output .= '<label for="industry3" class="mc-label">Health Care and Social Assistance</label><br>';
+$output .= '<p id="alert-message1" style="color: red; display: none; margin-top: 15px;  margin-left: 30px;"></p>';
+$output .= '</div>';
+$output .= '<div class="col-sm slide-left">';
+$output .= '<img src="https://cdn.pixabay.com/photo/2015/01/09/11/08/startup-594090_1280.jpg" style="max-height: 400px; width: auto; overflow: hidden;">';
+$output .= '</div>';
+$output .= '</div>';
 $output .= '<div class="q-button-container">';
-  $output .= '<button id="next-button" class="next-button-right">Next</button>';
-  $output .= '</div>';
-	  $output .= '</div>';
+$output .= '<button id="next-button" class="next-button-right">Next</button>';
+$output .= '</div>';
+$output .= '</div>';
+
 
   $output .= '<div id="question2" style="display: none; padding: 40px;">';
-  $output .= '<h2>2. Which job position are you interested in?</h2>';
+	$output .= '<div class="row">';
+$output .= '<div class="col-sm slide-right">';
+	
+  $output .= '<h4>2. Which job position are you interested in?</h4>';
   $output .= '<input type="text" id="occupation-input" name="occupation" list="occupation-list" style="width:500px;  margin-left: 30px;" placeholder="Please enter a job position or select from the list">';
   $output .= '<datalist id="occupation-list">';
   // options will be added dynamically by JavaScript
   $output .= '</datalist>';
 	$output .= '<p id="alert-message2" style="color: red; display: none; margin-top: 15px;  margin-left: 30px;"></p>';
+	$output .= '</div>';
+$output .= '<div class="col-sm slide-left">';
+$output .= '<img src="https://cdn.pixabay.com/photo/2021/02/03/00/10/receptionists-5975962_1280.jpg" style="max-height: 400px; width: auto; overflow: hidden;">';
+$output .= '</div>';
+$output .= '</div>';
+	
 	$output .= '<div class="q-button-container">';
 	 $output .= '<button id="previous-button2" class="previous-button-left">Previous</button>';
 	 $output .= '<button id="next-button2" class="next-button-right">Next</button>';
   $output .= '</div>';
 	  $output .= '</div>';
+	
 
 	$output .= '<div id="question3" style="display: none; padding: 40px;">';
-	$output .= '<h2>3. What is the highest level of education you have completed?</h2>';
+		$output .= '<div class="row">';
+$output .= '<div class="col-sm slide-right">';
+	
+	$output .= '<h4>3. What is the highest level of education you have completed?</h4>';
 	$output .= '<input type="radio" id="education1" name="education" class="radio-button" value="Post Grad/Grad Dip or Grad Cert">';
 	$output .= '<label for="education1" class="mc-label">Post Grad/Grad Dip or Grad Cert</label><br>';
 	$output .= '<input type="radio" id="education2" name="education" class="radio-button" value="Bachelor degree">';
@@ -68,6 +272,12 @@ $output .= '<div class="q-button-container">';
 	$output .= '<input type="radio" id="education5" name="education" class="radio-button" value="High school">';
 	$output .= '<label for="education5" class="mc-label">High School</label><br>';
 	$output .= '<p id="alert-message3" style="color: red; display: none; margin-top: 15px;  margin-left: 30px;"></p>';
+		$output .= '</div>';
+$output .= '<div class="col-sm slide-left">';
+$output .= '<img src="https://cdn.pixabay.com/photo/2014/10/14/20/14/library-488690_1280.jpg" style="max-height: 400px; width: auto; overflow: hidden;">';
+$output .= '</div>';
+$output .= '</div>';
+	
 	$output .= '<div class="q-button-container">';
 	$output .= '<button id="previous-button3" class="previous-button-left">Previous</button>';
 	$output .= '<button id="next-button3" class="next-button-right">Next</button>';
@@ -75,12 +285,19 @@ $output .= '<div class="q-button-container">';
 	$output .= '</div>';
 	
 	$output .= '<div id="question4" style="display: none; padding: 40px;">';
-$output .= '<h2>4. How many years of relevant work experience do you have?</h2>';
+		$output .= '<div class="row">';
+$output .= '<div class="col-sm slide-right">';
+$output .= '<h4>4. How many years of relevant work experience do you have?</h4>';
 $output .= '<select id="experience-input" style="width:100px;  margin-left: 30px;" name="experience">';
 for ($i=0; $i<=30; $i++) {
     $output .= '<option value="'.$i.'">'.$i.'</option>';
 }
 $output .= '</select>';
+		$output .= '</div>';
+$output .= '<div class="col-sm slide-left">';
+$output .= '<img src="https://cdn.pixabay.com/photo/2019/04/16/11/15/job-4131482_1280.jpg" style="max-height: 400px; width: auto; overflow: hidden;">';
+$output .= '</div>';
+$output .= '</div>';
 		$output .= '<div class="q-button-container">';
 $output .= '<button id="previous-button4" class="previous-button-left">Previous</button>';
 $output .= '<button id="next-button4" class="next-button-right">Next</button>';
@@ -88,55 +305,88 @@ $output .= '</div>';
 	$output .= '</div>';
 	
 	$output .= '<div id="result" style="display: none; padding: 40px;">';
-$output .= '<h2>Results</h2>';
-$output .= '<div class="results-container" style="margin-left: 30px; margin-right: 30px;">';
-	$output .= '<div class="message-container" style="background-color: #fff; border: solid #046BD2; border-width: 1.5px 1.5px 1.5px 7px; padding: 15px; margin-top: 40px; margin-bottom: 40px; border-radius: 5px;">';
-$output .= '<p id="result-message"></p>';
-	$output .= '<p id="additional-message"></p>';
-	$output .= '<p id="seek-link"></p>';
-	$output .= '</div>';
-	$output .= '<h4 id="trend-title"></h4>';
-	$output .= '<div class="chart-background" style="margin-top: 40px; padding: 15px; border-radius: 5px; border: solid #5bc0de; width: 900px;">';
-	$output .= '<div class="qualification-chart-container">';
-$output .= '<canvas id="qualification-chart"></canvas></div>';
-	$output .= '</div>';
-	$output .= '<div class="row-container" style="display: flex; margin-top: 40px;">';
-	$output .= '<div class="chart-background" style="padding: 15px; border-radius: 5px; border: solid #5bc0de;">';
-		$output .= '<div class="gender-chart-container">';
-$output .= '<canvas id="gender-chart"></canvas></div>';
-	$output .= '</div>';
-		$output .= '<div class="chart-background" style="margin-left: 30px; padding: 15px; border-radius: 5px; border: solid #5bc0de;">';
-	$output .= '<div class="employment-chart-container">';
-$output .= '<canvas id="employment-chart"></canvas></div>';
-$output .= '</div></div>';
-	$output .= '</div>';
-	$output .= '<div class="q-button-container">';
-	$output .= '<button id="previous-button5" class="previous-button-left">Previous</button>';
-$output .= '</div>';
-$output .= '</div>';
+		$output .= '<h2>Results</h2>';
+				$output .= '<div class="results-container fade-in" style="margin-left: 30px; margin-right: 30px;">';
+						$output .= '<div class="message-container" style="background-color: #fff; border: solid #046BD2; border-width: 1.5px 1.5px 1.5px 7px; padding: 15px; margin-top: 40px; margin-bottom: 40px; border-radius: 5px;">';
+							$output .= '<p id="result-message"></p>';
+							$output .= '<p id="additional-message"></p>';
+							$output .= '<p id="seek-link"></p>';
+						$output .= '</div>';
+				$output .= '<h4 id="insight-title"></h4>';
+				$output .= '<div class="chart-background" style="margin-top: 40px; padding: 15px; border-radius: 5px; border: solid #5bc0de; width: 900px;">';
+						$output .= '<div class="qualification-chart-container">';
+					$output .= '<canvas id="qualification-chart"></canvas></div>';
+				$output .= '</div>';
+				$output .= '<div class="row-container" style="display: flex; margin-top: 40px;">';
+					$output .= '<div class="chart-background" style="padding: 15px; border-radius: 5px; border: solid #5bc0de;">';
+						$output .= '<div class="gender-chart-container">';
+							$output .= '<canvas id="gender-chart"></canvas></div>';
+					$output .= '</div>';
+					$output .= '<div class="chart-background" style="margin-left: 30px; padding: 15px; border-radius: 5px; border: solid #5bc0de;">';
+						$output .= '<div class="employment-chart-container">';
+							$output .= '<canvas id="employment-chart"></canvas></div>';
+				$output .= '</div></div>';
+	$output .= '<div class="description-container" style="background-color: #fff; border: solid #046BD2; border-width: 1.5px 1.5px 1.5px 7px; padding: 15px; margin-top: 40px; margin-bottom: 40px; border-radius: 5px;">';
+							$output .= '<p id="description"></p>';
+						$output .= '</div>';
+				$output .= '<h4 id="trend-title" style="margin-top:40px;"></h4>';
+				$output .= '<div class="chart-background" style="margin-top: 40px; padding: 15px; border-radius: 5px; border: solid #5bc0de; width: 900px;">';
+						$output .= '<div class="line-chart-container">';
+						$output .= '<canvas id="line-chart"></canvas></div>';
+				$output .= '</div>';
 
-  $output .= '<style>';
-  $output .= '#quiz-intro {';
-  $output .= '  height: 100vh;';
-  $output .= '  background-size: cover;';
-  $output .= '  background-position: center;';
-  $output .= '  display: flex;';
-  $output .= '  justify-content: center;';
-  $output .= '  align-items: center;';
-  $output .= '} ';
-  $output .= '</style>';
+				$output .= '<div class="trend-text-container" style="background-color: #fff; border: solid #046BD2; border-width: 1.5px 1.5px 1.5px 7px; padding: 15px; margin-top: 40px; margin-bottom: 40px; border-radius: 5px;">';
+						$output .= '<p id="trend-text"></p>';
+	$output .= '<ul class="rating-list">';
+$output .= '  <li class="rating-item">';
+$output .= '    <div class="rating-rectangle decline"></div>';
+$output .= '    <span>Decline: Less than -3%</span>';
+$output .= '  </li>';
+$output .= '  <li class="rating-item">';
+$output .= '    <div class="rating-rectangle stable"></div>';
+$output .= '    <span>Stable: -3% to 2.9%</span>';
+$output .= '  </li>';
+$output .= '  <li class="rating-item">';
+$output .= '    <div class="rating-rectangle moderate"></div>';
+$output .= '    <span>Moderate: 3% to 7.9%</span>';
+$output .= '  </li>';
+$output .= '  <li class="rating-item">';
+$output .= '    <div class="rating-rectangle strong"></div>';
+$output .= '    <span>Strong: 8% to 14.9%</span>';
+$output .= '  </li>';
+$output .= '  <li class="rating-item">';
+$output .= '    <div class="rating-rectangle very-strong"></div>';
+$output .= '    <span>Very Strong: 15% and over</span>';
+$output .= '  </li>';
+$output .= '</ul>';
 
+				$output .= '</div>';
+	
+	$output .= '<div class="retake-button-container">';
+    $output .= '<button id="retake-button" style="margin-bottom:20px;">Retake the quiz</button>';
+$output .= '</div>';
+				$output .= '</div>';
+	$output .= '</div>';
+
+	
    $output .= '<script>';
 	$output .= 'var selectedIndustry;';
 	$output .= 'var qualificationChart;';
 	$output .= 'var genderChart;';
 	$output .= 'var employmentChart;';
+	$output .= 'var lineChart;';
+
   $output .= 'jQuery(document).ready(function($) {';
-	
+		$output .= 'function resetFormFields() {';
+$output .= '  $("input[type=radio]").prop("checked", false);';
+$output .= '  $("#occupation-input").val("");';
+$output .= '  $("input[type=radio][name=education]").prop("checked", false);';
+$output .= '  $("#experience-input").val("0");';
+$output .= '}';
 	$output .= '	function updateProgressBar(questionNumber) {';
 $output .= '  $("#q-progress").css("width", (questionNumber) * 20 + "%");';
-$output .= '  $("#q-Q1, #q-Q2, #q-Q3, #q-Q4, #q-Q5").css("color", "#999999");';
-$output .= '  $("#q-Q" + questionNumber).css("color", "white");';
+$output .= '  $("#q-Q1, #q-Q2, #q-Q3, #q-Q4, #q-Q5").css("color", "#a09d9d");';
+$output .= '  $("#q-Q" + questionNumber).css("color", "black");';
 $output .= '}';
 	
 	
@@ -177,7 +427,7 @@ $output .= '}';
   $output .= '          }';
   $output .= '        });';
   $output .= '      });';
-  
+  $output .= '      $("#alert-message1").hide();';
   $output .= '      $("#question1").hide();';
   $output .= '      $("#question2").show();';
 	
@@ -211,6 +461,7 @@ $output .= '    }';
 $output .= '  });';
 
 $output .= '  if (isValid) {';
+	  $output .= '      $("#alert-message2").hide();';
 $output .= '    $("#question2").hide();';
 $output .= '    $("#question3").show();';
 $output .= '    updateProgressBar(3);';
@@ -225,10 +476,11 @@ $output .= '  $("#question2").show();';
 	$output .= 'updateProgressBar(2);';
 $output .= '});';
 	
-$output .= '$("#previous-button5").click(function() {';
+$output .= '$("#retake-button").click(function() {';
 $output .= '  $("#result").hide();';
-$output .= '  $("#question4").show();';
-	$output .= 'updateProgressBar(4);';
+$output .= '  $("#question1").show();';
+	$output .= 'updateProgressBar(1);';
+	$output .= 'resetFormFields();';
 $output .= '});';
 
 	$output .= '	function educationTextToRank(text) {';
@@ -252,7 +504,7 @@ $output .= '}';
 $output .= '$("#next-button3").click(function() {';
 	
 	 $output .= 'if ($("input[name=\'education\']:checked").length > 0) {';
-	
+	  $output .= '      $("#alert-message3").hide();';
 	$output .= '     $("#question3").hide();';
 	$output .= '      $("#question4").show();';
 	 $output .= 'updateProgressBar(4);';
@@ -296,21 +548,25 @@ $output .= '      } else if (yearsExperience >= workExperience) {';
 $output .= '        $("#result-message").html("Based on your experience, it is likely that you are <b>qualified</b> for the position of a <b>" + selectedOccupation + "</b>.");';
 $output .= '  $("#additional-message").html("The <b>majority of individuals</b> in this position completed <b>" + response.most_position + "</b>. Although your highest level of education is <b>lower</b> than this, you have <b>" + yearsExperience + "</b> years of relevant work experience. For this position, at least <b>" + workExperience + "</b> years of relevant experience may be considered as a substitute for the formal qualification.");';
 $output .= '      } else {';
-$output .= '        $("#result-message").html("Sorry, it is most likely that you are <b>not qualified</b> for the position of a  <b>" + selectedOccupation + "</b>.");';
+$output .= '        $("#result-message").html("Based on your qualifications and experience, it may be challenging to meet the requirements for the position of a  <b>" + selectedOccupation + "</b>.");';
 $output .= '  $("#additional-message").html("The <b>majority of individuals</b> in this position completed <b>" + response.most_position + "</b>. Your highest level of education is <b>lower</b> than this, and you have <b>" + yearsExperience + "</b> years of relevant work experience. For this position, it is recommended to complete " + response.most_position + " or have at least <b>" + workExperience + "</b> years of relevant experience as a substitute for the formal qualification.");';
 $output .= '      }';
+$output .= '        $("#description").html("Most individuals in this job position have completed <b>" + response.most_position + "</b>.</br><b>" + response.male_share + "%</b> are <b>male</b> and <b>" + response.female_share + "%</b> are <b>female</b>.</br><b>" + response.full_time_share + "%</b> work <b>full-time</b> and <b>" + response.part_time_share + "%</b> work <b>part-time</b>.");';
+$output .= '        $("#trend-text").html("The future growth rate of <b>" + selectedOccupation + "</b> is projected to be <b>" + response.growth_rate + "%</b>, indicating a <b>" + response.future_growth_rating + "</b> growth rate.");';
+	
 
-$output .= '$("#seek-link").html(\'<a href="https://www.seek.com.au/\' + selectedOccupation + \'-jobs" target="_blank">Click here</a> to view \' + selectedOccupation + \' jobs on Seek.com.au\');';
-$output .= '$("#trend-title").html("Key Insights for " + selectedOccupation);';
+$output .= '$("#seek-link").html(\'<a href="https://www.seek.com.au/\' + selectedOccupation + \'-jobs" target="_blank">Click here</a> to view \' + selectedOccupation + \' jobs on <b>Seek.com.au</b>\');';
+$output .= '$("#insight-title").html("Key Insights for " + selectedOccupation);';
+	$output .= '$("#trend-title").html("Key Trend for " + selectedOccupation);';
 	// Destroy the previous chart if it exists
 $output .= '  if (qualificationChart) {';
 $output .= '    qualificationChart.destroy();';
 $output .= '  }';
 		// Create the bar chart using Chart.js
 $output .= '  var chartData = {';
-$output .= '    labels: ["Post Grad/Grad Dip or Grad Cert", "Bachelor Degree", "Advanced Diploma/Diploma", "Certificate III/IV", "High School"],';
+$output .= '    labels: ["High School", "Certificate III/IV", "Advanced Diploma/Diploma", "Bachelor Degree", "Post Grad/Grad Dip or Grad Cert"],';
 $output .= '    datasets: [{';
-$output .= '      data: [response.grad, response.bachelor_degree, response.diploma, response.certificate, response.high_school],';
+$output .= '      data: [response.high_school, response.certificate, response.diploma, response.bachelor_degree, response.grad],';
 $output .= '      backgroundColor: [';
 $output .= '        "rgba(75, 192, 192, 0.5)",';
 $output .= '        "rgba(255, 206, 86, 0.5)",';
@@ -519,6 +775,73 @@ $output .= '  });';
 $output .= '  employmentChart.options.plugins.title.text = "Employment Type of " + selectedOccupation;';
 $output .= '  employmentChart.update();';
 	
+//line graph for trend
+$output .= '	if (lineChart) {';
+$output .= '  lineChart.destroy();';
+$output .= '}';
+
+$output .= '  var lineData = {';
+$output .= '    labels: ["Nov-11", "Nov-12", "Nov-13", "Nov-14", "Nov-15", "Nov-16", "Nov-17", "Nov-18", "Nov-19", "Nov-20", "Nov-21", "Nov-22", "Nov-22", "Nov-23", "Nov-24", "Nov-26"],';
+$output .= '    datasets: [{';
+$output .= '      label: "Employment level (2011-2021)",';
+$output .= '      data: [response["2011_11"], response["2012_11"], response["2013_11"], response["2014_11"], response["2015_11"], response["2016_11"], response["2017_11"], response["2018_11"], response["2019_11"], response["2020_11"], response["2021_11"], null, null, null, null, null],';
+$output .= '      fill: false,';
+$output .= '      borderColor: "rgba(98,75,192, 1)",';
+$output .= '      backgroundColor: "rgba(98,75,192, 1)",';
+$output .= '      pointBackgroundColor: "rgba(98,75,192, 0.5)",';
+$output .= '      borderWidth: 2';
+$output .= '    }, {';
+$output .= '      label: "Projected employment level (2026)",';
+$output .= '      data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, response["project_level"]],';
+$output .= '      fill: false,';
+$output .= '      borderColor: "rgba(192,98,75, 1)",';
+$output .= '      backgroundColor: "rgba(192,98,75, 1)",';
+$output .= '      pointBackgroundColor: "rgba(192,98,75, 0.5)",'; // Set point background color
+$output .= '      borderWidth: 2';
+$output .= '    }]';
+$output .= '  };';
+
+$output .= '  var lineOptions = {';
+$output .= '    responsive: true,';
+$output .= '    plugins: {';
+$output .= '      legend: {';
+$output .= '        display: true,'; // Set display to true
+$output .= '      },';
+$output .= '      title: {';
+$output .= '        display: true,';
+$output .= '        text: "Employment level, past and projected growth to November 2026",'; // Add the chart title
+$output .= '        font: {';
+$output .= '          size: 16,';
+$output .= '          weight: "bold"';
+$output .= '        }';
+$output .= '      }';
+$output .= '    },';
+$output .= '    scales: {';
+$output .= '      x: {';
+$output .= '        title: {';
+$output .= '          display: true,';
+$output .= '          text: "Year"';
+$output .= '        }';
+$output .= '      },';
+$output .= '      y: {';
+$output .= '        title: {';
+$output .= '          display: false,';
+$output .= '          text: "Value"';
+$output .= '        },';
+$output .= '        ticks: {';
+$output .= '          stepSize: 5000'; // Adjust the stepSize to set the interval between ticks
+$output .= '        }';
+$output .= '      }';
+$output .= '    }';
+$output .= '  };';
+	
+$output .= '  var ctx4 = $("#line-chart")[0].getContext("2d");';
+$output .= '  lineChart = new Chart(ctx4, {';
+	$output .= '    type: "line",';
+$output .= '    data: lineData,';
+$output .= '    options: lineOptions';
+$output .= '  });';
+	
 $output .= '      $("#question4").hide();';
 $output .= '      $("#result").show();';
 $output .= 'updateProgressBar(5);';
@@ -580,7 +903,7 @@ function fetch_most_position() {
     $job_positions_table = $wpdb->prefix . 'healthcare';
   }
 
-   $result = $wpdb->get_row($wpdb->prepare("SELECT most_position, work_experience, grad, bachelor_degree, diploma, certificate, high_school, male_share, female_share, full_time_share, part_time_share FROM $job_positions_table WHERE occupation = %s", $selected_occupation), ARRAY_A);
+   $result = $wpdb->get_row($wpdb->prepare("SELECT most_position, work_experience, grad, bachelor_degree, diploma, certificate, high_school, male_share, female_share, full_time_share, part_time_share, 2011_11, 2012_11, 2013_11, 2014_11, 2015_11, 2016_11, 2017_11, 2018_11, 2019_11, 2020_11, 2021_11, project_level, project_growth, growth_rate, future_growth_rating FROM $job_positions_table WHERE occupation = %s", $selected_occupation), ARRAY_A);
 
   echo json_encode($result);
   wp_die();

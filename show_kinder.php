@@ -29,19 +29,19 @@ function show_kinder_on_map( $atts ) {
             background-color: #C5E2FF;
         }
 	</style>
-	<div style="display:flex;">
-		<div style="flex-basis:70%; margin-right:15px;">
+        <div class="row">
+		<div class="col-md-7">
         	<div id="map"></div>
         </div>
-        <div style="flex-basis:30%;">
+        <div class="col-md-5">
 			<div id="trip-info" style="margin-bottom:15px; background-color: #E9F4F6; padding:15px; border-radius: 5px; box-shadow: 0px 1px 2px rgba(0,0,0,0.1); ">
             	<h3>Get directions</h3>
     			<p><b>Starting point:</b></p>
 				<input id="search-input" class="controls kinder-map-text" type="text" placeholder="Please enter your address">
     			<p><b>Destination:</b></p>
 				<input id="selected-kinder" class="control kinder-map-text" type="text" placeholder="Please select a Kinder on map or from the list" readonly style="background-color: #eee;">
-    			<button id="search-route-btn">Search Route</button>
-				<button id="open-in-maps-btn">Open in Google Maps</button>
+    			<button id="search-route-btn"><i class="fas fa-search"></i> Search Route</button>
+<button id="open-in-maps-btn"><i class="fas fa-external-link-alt"></i> Open in Google Maps</button>
 				<div id="route-info" class="route-info" style="display:block;">
 					<p><b>Driving distance:</b> -</p>
 					<p><b>Driving time:</b> -</p>
@@ -63,7 +63,8 @@ function show_kinder_on_map( $atts ) {
             	</ul>
         	</div>
 		</div>
-  	</div>
+</div>
+ 
     
     <script>
     function initMap() {
@@ -75,7 +76,10 @@ function show_kinder_on_map( $atts ) {
 		
 		// Create a DirectionsService and DirectionsRenderer instance
         var directionsService = new google.maps.DirectionsService();
-    	var directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true });
+    	var directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true,
+  polylineOptions: {
+    strokeColor: '#FF0000'
+  } });
     	directionsRenderer.setMap(map);
 		
 		// Create a marker for the user's address and initialize it with a null position
@@ -233,6 +237,13 @@ function show_kinder_on_map( $atts ) {
 				});
 			});
 		
+		// Marker clustering
+var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+  gridSize: 40,             // Adjust the size of the grid for clustering
+  maxZoom: 15,              // Set the maximum zoom level for clustering
+  minimumClusterSize: 2     // Adjust the minimum number of markers required to form a cluster
+});
+		
 			function calculateAndDisplayRoute(directionsService, directionsRenderer, origin, destination) {
             	var request = {
             		origin: origin,
@@ -299,6 +310,7 @@ function show_kinder_on_map( $atts ) {
 			});
 	}
 	</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI6rIQzeTg4UxOJsrRg2KygemYaiNLERQ&libraries=places&callback=initMap"></script>
     <?php return ob_get_clean();
 }

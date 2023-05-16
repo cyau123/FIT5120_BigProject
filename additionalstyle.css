@@ -396,6 +396,9 @@ input[type="submit"], button#reset-btn {
 	height: 400px;
 	width: 400px;
 }
+.line-chart-container{
+	height: 400px;width: 800px;
+}
 
 .qualification-assessment {
     float: left;
@@ -407,11 +410,9 @@ input[type="submit"], button#reset-btn {
     justify-content: space-between;
     align-items: center;
     padding: 40px;
-    background-image: url('https://img.freepik.com/free-photo/silhouette-person-standing-beach-cloudy-sky-during-breathtaking-sunset_181624-13424.jpg?w=1800&t=st=1683160635~exp=1683161235~hmac=4b26cc61b0d757aa93075be7e43a01c3cfd0bba7af0a4fa2f2b9947cd0b01d2a');
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 200px; /* Adjust the height according to your preference */
+  background-color: #E9F4F6;
+    height: 200px;
+	box-shadow: -2px 0 2px rgba(0, 0, 0, 0.1), 2px 0 2px rgba(0, 0, 0, 0.1)
 }
 
 .q-progress-bar-container {
@@ -425,13 +426,13 @@ input[type="submit"], button#reset-btn {
 #q-progress-bar {
     width: 100%;
     height: 5px;
-    background-color: #f3f3f3;
+    background-color: #a09d9d;
 }
 
 #q-progress {
     display: block;
     height: 100%;
-    background-color: #046BD2;
+    background-color: #5bc0de;
     width: 0;
 }
 
@@ -477,11 +478,14 @@ input[type="submit"], button#reset-btn {
 .q-button-container{
 	margin-top: 150px;
 }
+.retake-button-container {
+    display: flex;
+    justify-content: center;
+}
 .radio-button {
     margin-right: 10px;
 	 margin-left: 30px;
 }
-
 .mc-label {
     margin-bottom: 10px;
     display: inline-block;

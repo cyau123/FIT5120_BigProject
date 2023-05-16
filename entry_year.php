@@ -40,10 +40,12 @@ function entry_year_shortcode() {
 <script>
         jQuery(document).ready(function($) {
             // Datepicker
+            var today = new Date();
             $('#dob').datepicker({
                 dateFormat: 'yy-mm-dd',
                 changeYear: true,
-                yearRange: "-100:+0"
+                yearRange: "-100:+0",
+				maxDate: today
             });
 
             // AJAX form submission

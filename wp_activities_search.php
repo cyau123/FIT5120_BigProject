@@ -247,7 +247,7 @@ document.querySelector(\'.next-btn\').addEventListener(\'click\', () => {
     updatePagination();
 		
                     function resetPage() {
-                        window.location.href = "https://financialguidevic.link/mental-health/social-connections";
+                        window.location.href = "https://financialguidevic.link/mental-health/discover-victoria";
                     }
 					
                 </script>';
