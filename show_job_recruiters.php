@@ -28,27 +28,47 @@ function show_job_recruiter_on_map( $atts ) {
 	    .kinder-box.active {
             background-color: #C5E2FF;
         }
+		#map-legend {
+		  background-color: #fff;
+		  padding: 10px;
+		  margin: 10px;
+		  font-size: 18px;
+		  font-family: Roboto, Arial, sans-serif;
+		  border-radius: 2px;
+		  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+		}
+		#legend-content {
+			display: none;
+		}
+		#legend-header:hover + #legend-content,
+		#legend-content:hover {
+			display: block;
+		}
+		.current-location-link {
+			cursor: pointer;
+			text-decoration: underline;
+			color: #0000EE;
+			margin-left:10px;
+		}
 	</style>
         <div class="row">
-		<div class="col-md-7">
-        	<div id="map"></div>
-        </div>
-        <div class="col-md-5">
+		 <div class="col-md-5">
 			<div id="trip-info" style="margin-bottom:15px; background-color: #E9F4F6; padding:15px; border-radius: 5px; box-shadow: 0px 1px 2px rgba(0,0,0,0.1); ">
             	<h3>Get directions</h3>
-    			<p><b>Starting point:</b></p>
+    			<p><b>Starting Point:</b></p>
 				<input id="search-input" class="controls kinder-map-text" type="text" placeholder="Please enter your address">
-    			<p><b>Destination:</b></p>
+				<p id="current-location-link" class="current-location-link">Use Current Location</p>
+    			<p><b>Destination Job Recruiter:</b></p>
 				<input id="selected-kinder" class="control kinder-map-text" type="text" placeholder="Select a Job Recruiter on map or from the list" readonly style="background-color: #eee;">
     			<button id="search-route-btn"><i class="fas fa-search"></i> Search Route</button>
 <button id="open-in-maps-btn"><i class="fas fa-external-link-alt"></i> Open in Google Maps</button>
-				<div id="route-info" class="route-info" style="display:block;">
+			<div id="route-info" class="route-info" style="display:block;">
 					<p><b>Driving distance:</b> -</p>
 					<p><b>Driving time:</b> -</p>
 				</div>
 			</div>
 			<div class="kinder-container" style="background-color: #E9F4F6; padding:15px; border-radius: 5px; box-shadow: 0px 1px 2px rgba(0,0,0,0.1); ">
-				<h3 class="kinder-title">Job recruiter locations</h3>
+				<h3 class="kinder-title">Job Recruiter locations</h3>
             	<ul id="kinder-list">
                 	<?php foreach ( $kinder_locations as $i => $location ) : ?>
                     	<div class="kinder-box">
@@ -62,14 +82,17 @@ function show_job_recruiter_on_map( $atts ) {
             	</ul>
         	</div>
 		</div>
+		<div class="col-md-7">
+        	<div id="map"></div>
+        </div>
+       
 </div>
- 
-    
+     
     <script>
     function initMap() {
         var melbourne = { lat: -37.8136, lng: 144.9631 };
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
+            zoom: 13,
             center: melbourne
         });
 		
@@ -93,6 +116,22 @@ function show_job_recruiter_on_map( $atts ) {
 
         var infowindows = [];
 		var markers = [];
+		
+		 var legend = document.createElement('div');
+    legend.id = 'map-legend';
+
+    var userIcon = "https://img.icons8.com/dusk/64/null/order-delivered.png";
+    var kinderIcon = "https://img.icons8.com/ios-filled/50/null/marker-j.png";
+
+    legend.innerHTML = '<p id="legend-header" style="margin-bottom:0px;">Legend</p>' +
+  '<div id="legend-content">' +
+  '<p style="margin-top:20px;"><img src="' + userIcon + '"> Starting Point</p>' +
+  '<p><img src="' + kinderIcon + '"> Job Recruiter</p>' +
+  '</div>';
+
+    // Append legend to the map
+    legend.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(legend);
 
         <?php foreach ( $kinder_locations as $i => $location ) : ?>
             var contentString<?php echo $i ?> = '<div id="content">'+
@@ -152,13 +191,14 @@ function show_job_recruiter_on_map( $atts ) {
                     selectedBox.parentElement.classList.add("active");
 		
 		            // Scroll the list to make the selected item visible
-                    selectedBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    selectedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
 					selectedDestination = { lat: lat, lng: lng };
 					
 					var kinderName = '<?php echo addslashes($location->name); ?>';
 					document.getElementById('selected-kinder').value = kinderName;
-					
-					//start
+				});
+				
+				//start
 					google.maps.event.addListener(infowindow, 'domready', function() {
 				document.querySelector('.infowindow-search-route[data-index="' + index + '"]').addEventListener('click', function(e) {
 					e.preventDefault();
@@ -193,8 +233,6 @@ function show_job_recruiter_on_map( $atts ) {
 				});
 			});
 //end
-					
-				});
 			})(marker, infowindows[<?php echo $i ?>], <?php echo $i ?>, <?php echo $location->latitude; ?>, <?php echo $location->longitude; ?>);
 
 			<?php endforeach; ?>
@@ -211,12 +249,114 @@ function show_job_recruiter_on_map( $atts ) {
                 	window.alert("No details available for input: '" + place.name + "'");
                 	return;
             	}
+				
+				userMarker.setPosition(place.geometry.location);
+				
+				 // Compute distances to each Kinder and find the nearest one
+				var minDist = Infinity;
+				var nearestKinder = null;
+				var nearestKinderIndex = null;
+				markers.forEach(function(marker, index) {
+					var dist = google.maps.geometry.spherical.computeDistanceBetween(
+						place.geometry.location, marker.getPosition());
+					if (dist < minDist) {
+						minDist = dist;
+						nearestKinder = marker;
+						nearestKinderIndex = index;
+					}
+				});
+
+				// scroll to nearest kinder
+				var kinderLocations = document.querySelectorAll(".kinder-location");
+					for (var i = 0; i < kinderLocations.length; i++) {
+					  var location = kinderLocations[i];
+					  var locationLat = parseFloat(location.dataset.lat);
+					  var locationLng = parseFloat(location.dataset.lng);
+					  if (locationLat === nearestKinder.getPosition().lat() && locationLng === nearestKinder.getPosition().lng()) {
+						selectedBox = location;
+						break;
+					  }
+					}
+               		
+		            // Scroll the list to make the selected item visible
+                    selectedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				
 				// Center the map on the selected address
             	map.setCenter(place.geometry.location);
-            	map.setZoom(16);
-				userMarker.setPosition(place.geometry.location);
+            	map.setZoom(13);
 			});
-					
+		
+		var currentLocationLink = document.getElementById('current-location-link');
+		currentLocationLink.addEventListener('click', function () {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function (position) {
+					var currentLatLng = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+
+					var geocoder = new google.maps.Geocoder();
+					geocoder.geocode({ location: currentLatLng }, function (results, status) {
+						if (status === 'OK' && results[0]) {
+							var formattedAddress = results[0].formatted_address;
+							searchInput.value = formattedAddress;
+							
+        	// Perform the rest of the logic using the formatted address
+                    var place = {
+                        formatted_address: formattedAddress,
+                        geometry: {
+                            location: currentLatLng
+                        }
+                    };
+				
+				userMarker.setPosition(place.geometry.location);
+				
+				 // Compute distances to each Kinder and find the nearest one
+				var minDist = Infinity;
+				var nearestKinder = null;
+				var nearestKinderIndex = null;
+				markers.forEach(function(marker, index) {
+					var dist = google.maps.geometry.spherical.computeDistanceBetween(
+						place.geometry.location, marker.getPosition());
+					if (dist < minDist) {
+						minDist = dist;
+						nearestKinder = marker;
+						nearestKinderIndex = index;
+					}
+				});
+
+				// scroll to nearest kinder
+				var kinderLocations = document.querySelectorAll(".kinder-location");
+					for (var i = 0; i < kinderLocations.length; i++) {
+					  var location = kinderLocations[i];
+					  var locationLat = parseFloat(location.dataset.lat);
+					  var locationLng = parseFloat(location.dataset.lng);
+					  if (locationLat === nearestKinder.getPosition().lat() && locationLng === nearestKinder.getPosition().lng()) {
+						selectedBox = location;
+						break;
+					  }
+					}
+               		
+		            // Scroll the list to make the selected item visible
+                    selectedBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				
+				// Center the map on the selected address
+            	map.setCenter(place.geometry.location);
+            	map.setZoom(13);
+				
+						} else {
+							console.error('Geocoding failed:', status);
+						}
+					});
+				}, function (error) {
+					console.error('Error retrieving current location:', error);
+				});
+			} else {
+				console.error('Geolocation is not supported by this browser.');
+			}
+		});
+
+		
 			// Click handler for list items
         	var locationItems = document.querySelectorAll(".kinder-location");
         	locationItems.forEach(function(item, index) {
@@ -224,7 +364,7 @@ function show_job_recruiter_on_map( $atts ) {
                 	var lat = parseFloat(this.dataset.lat);
                 	var lng = parseFloat(this.dataset.lng);
                 	map.setCenter({ lat: lat, lng: lng });
-                	map.setZoom(16);
+                	map.setZoom(13);
 
               		// Remove the active class from all other locations
                		var locations = document.querySelectorAll(".kinder-location");
@@ -321,7 +461,7 @@ var markerCluster = new MarkerClusterer(map, markers, {
 	}
 	</script>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI6rIQzeTg4UxOJsrRg2KygemYaiNLERQ&libraries=places&callback=initMap"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI6rIQzeTg4UxOJsrRg2KygemYaiNLERQ&libraries=places,geometry&callback=initMap"></script>
     <?php return ob_get_clean();
 }
 add_shortcode( 'show_job_recruiters', 'show_job_recruiter_on_map' );

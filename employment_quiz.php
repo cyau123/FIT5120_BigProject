@@ -176,7 +176,7 @@ $output .= '<h2 style="margin-bottom:40px;">Welcome to the Victoria Job Qualific
 					<div class="element"> </div>
 					<div class="element">
 					<img src="https://img.icons8.com/ios/50/null/light-on--v1.png" style="margin-bottom:30px;"/>
-					  <p style="margin-bottom:30px;">Please note that job specific requirements may vary. It is recommended to conduct further research and consult job listings to explore opportunities in your field.</p></div>
+					  <p style="margin-bottom:30px;">It is important to remember that this test is not a substitute for professional advice. It is recommended to seek professional guidance before making any career-related decisions.</p></div>
 					</div>
 					<div class="col-sm">
 					<div class="element"> </div>
@@ -359,9 +359,10 @@ $output .= '    <div class="rating-rectangle very-strong"></div>';
 $output .= '    <span>Very Strong: 15% and over</span>';
 $output .= '  </li>';
 $output .= '</ul>';
-
-				$output .= '</div>';
-	
+$output .= '</div>';
+$output .= '<div style="padding:15px;">';
+		$output .= '<h4>Disclaimer</h4><p>It is important to remember that this test is not a substitute for professional advice or diagnosis. While it can be a helpful starting point for assessing your qualifications for a desired job in Victoria, it is recommended to seek professional guidance and conduct further research before making any career-related decisions. Additionally, please note that we do not collect any personal data from participants during this test.</p>';
+	$output .= '</div>';
 	$output .= '<div class="retake-button-container">';
     $output .= '<button id="retake-button" style="margin-bottom:20px;">Retake the quiz</button>';
 $output .= '</div>';
@@ -793,6 +794,9 @@ $output .= '      borderWidth: 2';
 $output .= '    }, {';
 $output .= '      label: "Projected employment level (2026)",';
 $output .= '      data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, response["project_level"]],';
+$output .= '      pointStyle: "star",';
+$output .= '      pointRadius: 10,';
+$output .= '      pointHoverRadius: 12,';
 $output .= '      fill: false,';
 $output .= '      borderColor: "rgba(192,98,75, 1)",';
 $output .= '      backgroundColor: "rgba(192,98,75, 1)",';
